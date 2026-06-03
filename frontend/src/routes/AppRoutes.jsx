@@ -1,0 +1,4 @@
+<Route
+ path="/dashboard"
+ element={<Dashboard />}
+/>
