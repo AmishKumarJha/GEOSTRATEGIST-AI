@@ -2,26 +2,26 @@ const router =
   require("express").Router();
 
 const {
-  getCountries,
-  getCountry,
-  createCountry,
+  getRegions,
+  getRegion,
+  createRegion,
 } = require(
-  "../controllers/country.controller"
+  "../controllers/region.controller"
 );
 
 router.get(
   "/",
-  getCountries
+  getRegions
 );
 
 router.get(
   "/:id",
-  getCountry
+  getRegion
 );
 
 router.post(
   "/",
-  createCountry
+  createRegion
 );
 
 module.exports = router;

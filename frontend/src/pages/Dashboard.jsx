@@ -1,31 +1,95 @@
-import AppLayout
-from "../layouts/AppLayout";
+import StatCard from "../components/dashboard/StatCard";
 
 export default function Dashboard() {
-
   return (
-    <AppLayout>
+    <div className="p-8">
 
-      <div className="grid gap-6 md:grid-cols-4">
+      <div className="mb-10">
 
-        <div className="border rounded-lg p-4">
-          Active Conflicts
-        </div>
+        <h1
+          className="
+          text-4xl
+          font-bold
+          text-white
+          "
+        >
+          Global Dashboard
+        </h1>
 
-        <div className="border rounded-lg p-4">
-          Threat Index
-        </div>
-
-        <div className="border rounded-lg p-4">
-          Alerts
-        </div>
-
-        <div className="border rounded-lg p-4">
-          Forecasts
-        </div>
+        <p className="text-slate-400 mt-2">
+          Operational overview of geopolitical
+          activity, intelligence streams and
+          predictive forecasts.
+        </p>
 
       </div>
 
-    </AppLayout>
+      <div
+        className="
+        grid
+        grid-cols-1
+        md:grid-cols-2
+        xl:grid-cols-4
+        gap-6
+        "
+      >
+
+        <StatCard
+          title="Active Conflicts"
+          value="18"
+          color="text-red-400"
+        />
+
+        <StatCard
+          title="Threat Index"
+          value="74"
+          color="text-cyan-300"
+        />
+
+        <StatCard
+          title="Alerts"
+          value="6"
+          color="text-yellow-400"
+        />
+
+        <StatCard
+          title="Forecast Accuracy"
+          value="92%"
+          color="text-green-400"
+        />
+
+      </div>
+
+      <div
+        className="
+        mt-8
+        bg-[#1A1F30]
+        border
+        border-[#3C494E]
+        rounded-xl
+        p-6
+        "
+      >
+        <h2
+          className="
+          text-lg
+          font-semibold
+          text-cyan-300
+          mb-4
+          "
+        >
+          Situation Overview
+        </h2>
+
+        <p className="text-slate-400">
+          Monitor conflict zones, sanctions,
+          military deployments, diplomatic
+          developments and strategic risks
+          across the globe in real time.
+        </p>
+
+      </div>
+
+    </div>
   );
 }

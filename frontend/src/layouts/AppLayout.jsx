@@ -4,13 +4,26 @@ import MobileNav from "../components/layout/MobileNav";
 
 export default function AppLayout({ children }) {
   return (
-    <div className="min-h-screen bg-background flex">
+    <div
+      className="
+      min-h-screen
+      flex
+      bg-[#0E1323]
+      text-[#DEE1F9]
+      "
+    >
       <Sidebar />
 
       <div className="flex-1 flex flex-col">
         <Topbar />
 
-        <main className="flex-1 p-6">
+        <main
+          className="
+          flex-1
+          overflow-y-auto
+          bg-[#0E1323]
+          "
+        >
           {children}
         </main>
 

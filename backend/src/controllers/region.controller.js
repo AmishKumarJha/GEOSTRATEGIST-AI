@@ -1,16 +1,16 @@
-const CountryService = require(
-  "../services/country.service"
+const RegionService = require(
+  "../services/region.service"
 );
 
-exports.getCountries = async (
+exports.getRegions = async (
   req,
   res
 ) => {
   try {
-    const countries =
-      await CountryService.getCountries();
+    const regions =
+      await RegionService.getRegions();
 
-    res.status(200).json(countries);
+    res.status(200).json(regions);
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -19,24 +19,24 @@ exports.getCountries = async (
   }
 };
 
-exports.getCountry = async (
+exports.getRegion = async (
   req,
   res
 ) => {
   try {
-    const country =
-      await CountryService.getCountryById(
+    const region =
+      await RegionService.getRegionById(
         req.params.id
       );
 
-    if (!country) {
+    if (!region) {
       return res.status(404).json({
         success: false,
-        message: "Country not found",
+        message: "Region not found",
       });
     }
 
-    res.status(200).json(country);
+    res.status(200).json(region);
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -45,28 +45,21 @@ exports.getCountry = async (
   }
 };
 
-exports.createCountry = async (
+exports.createRegion = async (
   req,
   res
 ) => {
   try {
-    console.log(
-      "BODY:",
-      req.body
-    );
-
-    const country =
-      await CountryService.createCountry(
+    const region =
+      await RegionService.createRegion(
         req.body
       );
 
     res.status(201).json({
       success: true,
-      country,
+      region,
     });
   } catch (error) {
-    console.error(error);
-
     res.status(500).json({
       success: false,
       message: error.message,
