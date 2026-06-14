@@ -8,6 +8,7 @@ const {
   register,
   login,
   me,
+  googleLogin,
 } = require(
   "../controllers/auth.controller"
 );
@@ -30,5 +31,13 @@ router.post(
   "/login",
   login
 );
-
+router.post(
+  "/google",
+  googleLogin
+);
+router.get(
+  "/me",
+  authMiddleware,
+  me
+);
 module.exports = router;

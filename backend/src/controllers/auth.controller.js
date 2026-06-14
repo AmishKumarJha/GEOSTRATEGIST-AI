@@ -1,4 +1,14 @@
-const authService = require(
+const User =
+  require("../models/User");
+
+const generateToken =
+  require("../utils/generateToken");
+
+const {
+  OAuth2Client,
+} = require(
+  "google-auth-library"
+); const authService = require(
   "../services/auth.service"
 );
 
@@ -56,6 +66,12 @@ exports.login = async (
     });
   }
 };
+exports.googleLogin =
+  async (req, res) => {
+
+    // full google code here
+
+  };
 
 exports.me = async (
   req,

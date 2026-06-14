@@ -7,7 +7,7 @@ import {
 } from "react-leaflet";
 
 import "leaflet/dist/leaflet.css";
-import "../styles/map.css";
+import "../../styles/map.css";
 
 import L from "leaflet";
 
@@ -16,7 +16,7 @@ import {
   useState,
 } from "react";
 
-import api from "../services/api";
+import api from "../../services/api";
 
 const conflictIcon =
   L.divIcon({
@@ -26,8 +26,7 @@ const conflictIcon =
     iconSize: [20, 20],
   });
 
-export default function Map() {
-
+export default function IntelligenceMap() {
   const [regions, setRegions] =
     useState([]);
 
@@ -38,18 +37,13 @@ export default function Map() {
     useState("");
 
   useEffect(() => {
-
     fetchRegions();
-
     fetchConflicts();
-
   }, []);
 
   const fetchRegions =
     async () => {
-
       try {
-
         const response =
           await api.get(
             "/regions"
@@ -58,19 +52,14 @@ export default function Map() {
         setRegions(
           response.data
         );
-
       } catch (error) {
-
         console.error(error);
-
       }
     };
 
   const fetchConflicts =
     async () => {
-
       try {
-
         const response =
           await api.get(
             "/conflicts"
@@ -79,11 +68,8 @@ export default function Map() {
         setConflicts(
           response.data
         );
-
       } catch (error) {
-
         console.error(error);
-
       }
     };
 
@@ -100,12 +86,14 @@ export default function Map() {
 
   const getColor =
     (score) => {
-
-      if (score >= 75)
+      if (score >= 70)
         return "#ff3b30";
 
-      if (score >= 50)
-        return "#ffb020";
+      if (score >= 45)
+        return "#ff9500";
+
+      if (score >= 25)
+        return "#ffd60a";
 
       return "#22c55e";
     };
@@ -121,24 +109,7 @@ export default function Map() {
     );
 
   return (
-    <div className="p-8">
-
-      <h1
-        className="
-        text-5xl
-        font-bold
-        mb-8
-        bg-gradient-to-r
-        from-cyan-400
-        via-blue-400
-        to-violet-400
-        bg-clip-text
-        text-transparent
-        "
-      >
-         Intelligence Map
-      </h1>
-
+    <>
       <input
         type="text"
         placeholder="Search region..."
@@ -172,30 +143,21 @@ export default function Map() {
         shadow-[0_0_40px_rgba(34,211,238,0.15)]
         "
       >
-
         <div
           className="
           absolute
           top-6
           right-6
           z-[1000]
-
           bg-black/40
           backdrop-blur-xl
-
           border
           border-cyan-500/20
-
           rounded-2xl
-
           p-4
-
           w-72
           "
         >
-
-
-
           <div
             className="
             mt-4
@@ -219,7 +181,6 @@ export default function Map() {
             {" "}
             {regions.length}
           </div>
-
         </div>
 
         <MapContainer
@@ -230,14 +191,12 @@ export default function Map() {
             width: "100%",
           }}
         >
-
           <TileLayer
             url="https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
           />
 
           {filteredRegions.map(
             (region) => (
-
               <CircleMarker
                 key={region._id}
                 center={
@@ -256,26 +215,20 @@ export default function Map() {
                     getColor(
                       region.riskScore
                     ),
-
                   fillColor:
                     getColor(
                       region.riskScore
                     ),
-
                   fillOpacity: 0.7,
-
                   weight: 3,
                 }}
               >
-
                 <Popup>
-
                   <div
                     className="
                     tactical-popup
                     "
                   >
-
                     <div
                       className="
                       tactical-title
@@ -311,146 +264,137 @@ export default function Map() {
                       {region.newsCount}
                     </p>
 
-                    {
-                      region.assessment && (
+                    {region.assessment && (
+                      <div
+                        className="
+                        mt-3
+                        border-t
+                        border-slate-700
+                        pt-3
+                        "
+                      >
                         <div
                           className="
-                          mt-3
-                          border-t
-                          border-slate-700
-                          pt-3
+                          tactical-label
                           "
                         >
-
-                          <div
-                            className="
-                            tactical-label
-                            "
-                          >
-                            AI ASSESSMENT
-                          </div>
-
-                          <p
-                            className="
-                            mt-2
-                            text-sm
-                            "
-                          >
-                            {
-                              region.assessment
-                            }
-                          </p>
-
+                          AI ASSESSMENT
                         </div>
-                      )
-                    }
 
+                        <p
+                          className="
+                          mt-2
+                          text-sm
+                          "
+                        >
+                          {
+                            region.assessment
+                          }
+                        </p>
+                      </div>
+                    )}
                   </div>
-
                 </Popup>
-
               </CircleMarker>
-
             )
           )}
 
-          {conflicts.map(
-            (conflict) => (
-
-              <Marker
-                key={
-                  conflict._id
-                }
-                icon={
-                  conflictIcon
-                }
-                position={[
-                  conflict.lat,
-                  conflict.lng,
-                ]}
-              >
-
-                <Popup>
-
-                  <div
-                    className="
-                    tactical-popup
-                    "
-                  >
-
+          {conflicts
+            .filter(
+              (conflict) =>
+                !(
+                  conflict.lat ===
+                    22 &&
+                  conflict.lng ===
+                    78
+                )
+            )
+            .map(
+              (conflict) => (
+                <Marker
+                  key={
+                    conflict._id
+                  }
+                  icon={
+                    conflictIcon
+                  }
+                  position={[
+                    conflict.lat ||
+                      30,
+                    conflict.lng ||
+                      45,
+                  ]}
+                >
+                  <Popup>
                     <div
                       className="
-                      tactical-title
+                      tactical-popup
                       "
                     >
-                      HOSTILE CONTACT
-                    </div>
+                      <div
+                        className="
+                        tactical-title
+                        "
+                      >
+                        HOSTILE CONTACT
+                      </div>
 
-                    <h2
-                      className="
-                      font-bold
-                      text-lg
-                      "
-                    >
-                      {
-                        conflict.name
-                      }
-                    </h2>
-
-                    <p
-                      className="
-                      tactical-label
-                      "
-                    >
-                      {
-                        conflict.region
-                      }
-                    </p>
-
-                    <div className="mt-3">
-
-                      <p>
-                        Severity:
-                        {" "}
+                      <h2
+                        className="
+                        font-bold
+                        text-lg
+                        "
+                      >
                         {
-                          conflict.severity
+                          conflict.name
+                        }
+                      </h2>
+
+                      <p
+                        className="
+                        tactical-label
+                        "
+                      >
+                        {
+                          conflict.region
                         }
                       </p>
 
-                      <p>
-                        Status:
-                        {" "}
+                      <div className="mt-3">
+                        <p>
+                          Severity:
+                          {" "}
+                          {
+                            conflict.severity
+                          }
+                        </p>
+
+                        <p>
+                          Status:
+                          {" "}
+                          {
+                            conflict.status
+                          }
+                        </p>
+                      </div>
+
+                      <p
+                        className="
+                        mt-3
+                        text-sm
+                        "
+                      >
                         {
-                          conflict.status
+                          conflict.summary
                         }
                       </p>
-
                     </div>
-
-                    <p
-                      className="
-                      mt-3
-                      text-sm
-                      "
-                    >
-                      {
-                        conflict.summary
-                      }
-                    </p>
-
-                  </div>
-
-                </Popup>
-
-              </Marker>
-
-            )
-          )}
-
+                  </Popup>
+                </Marker>
+              )
+            )}
         </MapContainer>
-
       </div>
-
-    </div>
+    </>
   );
 }

@@ -20,6 +20,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    googleId: {
+  type: String,
+},
+
+provider: {
+  type: String,
+  default: "local",
+},
 
     role: {
       type: String,

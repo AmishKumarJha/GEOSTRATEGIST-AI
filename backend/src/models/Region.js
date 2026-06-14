@@ -18,6 +18,10 @@ const regionSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    threatLevel: {
+  type: String,
+  default: "Low",
+},
 
     newsCount: {
       type: Number,
@@ -29,11 +33,23 @@ const regionSchema = new mongoose.Schema(
       stability: Number,
       deEscalation: Number,
     },
+   assessment: {
+  type: String,
+  default: "",
+},
 
-    lastUpdated: {
-      type: Date,
-      default: Date.now,
-    },
+assessmentUpdatedAt: {
+  type: Date,
+},
+
+nextNewsUpdate: {
+  type: Date,
+},
+
+lastUpdated: {
+  type: Date,
+  default: Date.now,
+},
   },
   {
     timestamps: true,

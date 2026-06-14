@@ -1,11 +1,35 @@
+import { useEffect, useState } from "react";
 import StatCard from "../components/dashboard/StatCard";
+import IntelligenceMap from "../components/map/IntelligenceMap";
+import { getDashboardStats } from "../services/dashboardService";
 
 export default function Dashboard() {
+  const [stats, setStats] = useState({
+    activeConflicts: 0,
+    threatIndex: 0,
+    alerts: 0,
+    forecastAccuracy: 0,
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await getDashboardStats();
+        setStats(data);
+      } catch (error) {
+        console.error(
+          "Failed to load dashboard stats:",
+          error
+        );
+      }
+    };
+
+    fetchStats();
+  }, []);
+
   return (
     <div className="p-8">
-
       <div className="mb-10">
-
         <h1
           className="
           text-4xl
@@ -21,7 +45,6 @@ export default function Dashboard() {
           activity, intelligence streams and
           predictive forecasts.
         </p>
-
       </div>
 
       <div
@@ -33,34 +56,32 @@ export default function Dashboard() {
         gap-6
         "
       >
-
         <StatCard
           title="Active Conflicts"
-          value="18"
+          value={stats.activeConflicts}
           color="text-red-400"
         />
 
         <StatCard
           title="Threat Index"
-          value="74"
+          value={stats.threatIndex}
           color="text-cyan-300"
         />
 
         <StatCard
           title="Alerts"
-          value="6"
+          value={stats.alerts}
           color="text-yellow-400"
         />
 
         <StatCard
           title="Forecast Accuracy"
-          value="92%"
+          value={`${stats.forecastAccuracy}%`}
           color="text-green-400"
         />
-
       </div>
 
-      <div
+            <div
         className="
         mt-8
         bg-[#1A1F30]
@@ -87,9 +108,31 @@ export default function Dashboard() {
           developments and strategic risks
           across the globe in real time.
         </p>
-
       </div>
 
+      <div
+        className="
+        mt-8
+        bg-[#1A1F30]
+        border
+        border-[#3C494E]
+        rounded-xl
+        p-6
+        "
+      >
+        <h2
+          className="
+          text-2xl
+          font-semibold
+          text-cyan-300
+          mb-6
+          "
+        >
+          Global Intelligence Map
+        </h2>
+
+        <IntelligenceMap />
+      </div>
     </div>
   );
 }

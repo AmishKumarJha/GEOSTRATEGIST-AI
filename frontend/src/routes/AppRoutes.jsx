@@ -3,14 +3,15 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-
 import AppLayout from "../layouts/AppLayout";
 import RegionDetails from "../pages/RegionDetails";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
 import Region from "../pages/Region";
-
+import News from "../pages/News";
+import Conflicts from "../pages/Conflicts";
+import Chat from "../pages/Chat";
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -51,6 +52,24 @@ export default function AppRoutes() {
     </AppLayout>
   }
 />
+<Route
+  path="/news"
+  element={
+    <AppLayout>
+      <News />
+    </AppLayout>
+  }
+/>
+
+<Route
+  path="/conflicts"
+  element={
+    <AppLayout>
+      <Conflicts />
+    </AppLayout>
+  }
+/>
+<Route path="/chat" element={<Chat />} />
 
       </Routes>
     </BrowserRouter>
