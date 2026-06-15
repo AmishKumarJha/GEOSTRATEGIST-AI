@@ -72,7 +72,7 @@ export default function MobileNav() {
           >
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-cyan-300 font-semibold">
-                Intelligence Ops
+                GEOSTRATEGIST AI
               </h2>
 
               <button

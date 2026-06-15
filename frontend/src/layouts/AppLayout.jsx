@@ -1,35 +1,70 @@
-// import Sidebar from "../components/layout/Sidebar";
 import Topbar from "../components/layout/Topbar";
-import MobileNav from "../components/layout/MobileNav";
+import { useLocation } from "react-router-dom";
 
-export default function AppLayout({ children }) {
+export default function AppLayout({
+  children,
+}) {
+  const location =
+    useLocation();
+
+  const isChatPage =
+    location.pathname ===
+    "/chat";
+
   return (
     <div
       className="
       min-h-screen
-      flex
-      bg-[#0E1323]
-      text-[#DEE1F9]
+      bg-[#020617]
+      text-slate-100
+      relative
+      overflow-hidden
       "
     >
-      {/* <Sidebar /> */}
+      <div
+        className="
+        absolute
+        inset-0
+        pointer-events-none
+        bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.08),transparent_55%)]
+      "
+      />
 
-      <div className="flex-1 flex flex-col">
+      <div
+        className="
+        relative
+        min-h-screen
+        flex
+        flex-col
+        "
+      >
         <Topbar />
 
         <main
-  className="
-  flex-1
-  overflow-y-auto
-  bg-[#0E1323]
-  pt-16
-  sm:pt-0
-  "
->
-          {children}
-        </main>
+          className="
+          flex-1
+          w-full
+          "
+        >
+          {isChatPage ? (
+            children
+          ) : (
+            <div
+              className="
+              max-w-[1700px]
+              mx-auto
 
-        <MobileNav />
+              px-4
+              md:px-6
+              lg:px-8
+
+              pb-10
+              "
+            >
+              {children}
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );

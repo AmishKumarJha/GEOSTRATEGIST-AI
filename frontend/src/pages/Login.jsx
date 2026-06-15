@@ -1,40 +1,35 @@
 import { useState } from "react";
-
-import { Link, useNavigate }
-from "react-router-dom";
-
-import {
-  GoogleLogin,
-} from "@react-oauth/google";
+import { Link, useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 
 import {
-  loginUser,
-} from "../services/authService";
+  ArrowLeft,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 
-import api
-  from "../services/api";
-
-import useAuthStore
-  from "../store/authStore";
+import { loginUser } from "../services/authService";
+import api from "../services/api";
+import useAuthStore from "../store/authStore";
 
 export default function Login() {
+  const navigate = useNavigate();
 
-  const navigate =
-    useNavigate();
-
-  const setAuth =
-    useAuthStore(
-      (state) =>
-        state.setAuth
-    );
+  const setAuth = useAuthStore(
+    (state) => state.setAuth
+  );
 
   const [email, setEmail] =
     useState("");
 
-  const [
-    password,
-    setPassword,
-  ] = useState("");
+  const [password, setPassword] =
+    useState("");
+
+  const [showPassword,
+    setShowPassword] =
+    useState(false);
 
   const [error, setError] =
     useState("");
@@ -44,11 +39,9 @@ export default function Login() {
 
   const handleSubmit =
     async (e) => {
-
       e.preventDefault();
 
       try {
-
         setLoading(true);
 
         const res =
@@ -63,30 +56,22 @@ export default function Login() {
         );
 
         navigate("/");
-
       } catch (err) {
-
         setError(
           err.response?.data
             ?.message ||
-          "Login failed"
+            "Login failed"
         );
-
       } finally {
-
         setLoading(false);
-
       }
-
     };
 
   const handleGoogleLogin =
     async (
       credentialResponse
     ) => {
-
       try {
-
         const res =
           await api.post(
             "/auth/google",
@@ -102,21 +87,16 @@ export default function Login() {
         );
 
         navigate("/");
-
       } catch (err) {
-
         console.error(err);
 
         setError(
-          "Google login failed"
+          "Google Login Failed"
         );
-
       }
-
     };
 
   return (
-
     <div
       className="
       min-h-screen
@@ -124,30 +104,78 @@ export default function Login() {
       items-center
       justify-center
       bg-[#020617]
+      relative
+      overflow-hidden
       px-4
-      "
+    "
     >
-
+      {/* Background Glow */}
       <div
         className="
+        absolute
+        inset-0
+        bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.08),transparent_70%)]
+      "
+      />
+
+      {/* Back Button */}
+      <button
+        onClick={() =>
+          navigate(-1)
+        }
+        className="
+          absolute
+          top-6
+          left-6
+
+          h-11
+          w-11
+
+          flex
+          items-center
+          justify-center
+
+          rounded-xl
+
+          bg-[#0F172A]
+
+          border
+          border-cyan-500/20
+
+          text-cyan-400
+
+          hover:bg-[#172036]
+
+          transition
+        "
+      >
+        <ArrowLeft size={18} />
+      </button>
+
+      {/* Card */}
+      <div
+        className="
+        relative
+
         w-full
         max-w-md
 
-        bg-[#0F172A]
+        bg-[#0F172A]/90
+        backdrop-blur-xl
 
         border
         border-cyan-500/20
 
-        rounded-3xl
+        rounded-[28px]
 
-        p-8
+        px-8
+        py-10
 
-        shadow-[0_0_40px_rgba(34,211,238,0.15)]
-        "
+        shadow-[0_0_50px_rgba(34,211,238,0.12)]
+      "
       >
-
+        {/* Header */}
         <div className="text-center">
-
           <h1
             className="
             text-4xl
@@ -160,135 +188,217 @@ export default function Login() {
 
             bg-clip-text
             text-transparent
-            "
+          "
           >
             GeoStrategist AI
           </h1>
 
+          <h2
+            className="
+            text-3xl
+            font-bold
+            text-white
+            mt-6
+          "
+          >
+            Welcome Back
+          </h2>
+
           <p
             className="
-            text-slate-400
             mt-3
-            "
+            text-slate-400
+          "
           >
             Sign in to access
             geopolitical intelligence
           </p>
-
         </div>
 
+        {/* Form */}
         <form
           onSubmit={
             handleSubmit
           }
           className="
-          mt-8
-          space-y-4
-          "
+          mt-10
+          space-y-5
+        "
         >
+          <div className="relative">
+            <Mail
+              size={18}
+              className="
+                absolute
+                left-5
+                top-1/2
+                -translate-y-1/2
+                text-slate-500
+              "
+            />
 
-          <input
-            type="email"
-            placeholder="Email"
+            <input
+              type="email"
+              placeholder="Email ID"
+              value={email}
+              onChange={(e) =>
+                setEmail(
+                  e.target.value
+                )
+              }
+              className="
+                w-full
+                h-14
 
-            value={email}
+                rounded-full
 
-            onChange={(e)=>
-              setEmail(
-                e.target.value
-              )
-            }
+                bg-slate-900/70
 
-            className="
-            w-full
+                border
+                border-slate-700
 
-            p-3
+                pl-12
+                pr-5
 
-            rounded-xl
+                text-white
 
-            bg-slate-900
+                placeholder:text-slate-500
 
-            border
-            border-slate-700
+                outline-none
 
-            text-white
+                focus:border-cyan-500
+                focus:ring-2
+                focus:ring-cyan-500/20
+              "
+            />
+          </div>
 
-            outline-none
-            "
-          />
+          <div className="relative">
+            <Lock
+              size={18}
+              className="
+                absolute
+                left-5
+                top-1/2
+                -translate-y-1/2
+                text-slate-500
+              "
+            />
 
-          <input
-            type="password"
-            placeholder="Password"
+            <input
+              type={
+                showPassword
+                  ? "text"
+                  : "password"
+              }
+              placeholder="Password"
+              value={password}
+              onChange={(e) =>
+                setPassword(
+                  e.target.value
+                )
+              }
+              className="
+                w-full
+                h-14
 
-            value={password}
+                rounded-full
 
-            onChange={(e)=>
-              setPassword(
-                e.target.value
-              )
-            }
+                bg-slate-900/70
 
-            className="
-            w-full
+                border
+                border-slate-700
 
-            p-3
+                pl-12
+                pr-12
 
-            rounded-xl
+                text-white
 
-            bg-slate-900
+                placeholder:text-slate-500
 
-            border
-            border-slate-700
+                outline-none
 
-            text-white
+                focus:border-cyan-500
+                focus:ring-2
+                focus:ring-cyan-500/20
+              "
+            />
 
-            outline-none
-            "
-          />
+            <button
+              type="button"
+              onClick={() =>
+                setShowPassword(
+                  !showPassword
+                )
+              }
+              className="
+                absolute
+                right-5
+                top-1/2
+                -translate-y-1/2
+                text-slate-500
+              "
+            >
+              {showPassword ? (
+                <EyeOff size={18} />
+              ) : (
+                <Eye size={18} />
+              )}
+            </button>
+          </div>
+
+          <div className="flex justify-end">
+            <button
+              type="button"
+              className="
+                text-cyan-400
+                text-sm
+                hover:text-cyan-300
+              "
+            >
+              Forgot password?
+            </button>
+          </div>
 
           {error && (
-
             <div
               className="
-              text-red-400
-              text-sm
+                text-red-400
+                text-sm
               "
             >
               {error}
             </div>
-
           )}
 
           <button
             type="submit"
-
             disabled={loading}
-
             className="
-            w-full
+              w-full
+              h-14
 
-            p-3
+              rounded-full
 
-            rounded-xl
+              bg-cyan-500
 
-            bg-cyan-500
+              text-black
 
-            text-black
+              font-bold
 
-            font-bold
+              transition-all
 
-            hover:bg-cyan-400
-            transition
+              hover:bg-cyan-400
+              hover:shadow-[0_0_25px_rgba(34,211,238,0.4)]
+
+              disabled:opacity-60
+              disabled:cursor-not-allowed
             "
           >
-            {
-              loading
-                ? "Signing In..."
-                : "Login"
-            }
+            {loading
+              ? "Signing In..."
+              : "Login"}
           </button>
-
         </form>
 
         <div
@@ -296,9 +406,8 @@ export default function Login() {
           mt-6
           flex
           justify-center
-          "
+        "
         >
-
           <GoogleLogin
             onSuccess={
               handleGoogleLogin
@@ -309,20 +418,18 @@ export default function Login() {
               )
             }
           />
-
         </div>
 
         <div
           className="
-          mt-6
+          mt-8
           text-center
-          "
+        "
         >
-
           <span
             className="
             text-slate-400
-            "
+          "
           >
             Don't have an account?
           </span>
@@ -330,19 +437,17 @@ export default function Login() {
           <Link
             to="/register"
             className="
-            ml-2
-            text-cyan-400
-            hover:text-cyan-300
+              ml-2
+              text-cyan-400
+              hover:text-cyan-300
+              font-medium
             "
           >
             Register
           </Link>
-
         </div>
-
       </div>
-
     </div>
-
   );
 }
+

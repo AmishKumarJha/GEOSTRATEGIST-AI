@@ -1,70 +1,124 @@
 import { useEffect, useState } from "react";
+
 import StatCard from "../components/dashboard/StatCard";
 import IntelligenceMap from "../components/map/IntelligenceMap";
-import { getDashboardStats } from "../services/dashboardService";
+import GlowCard from "../components/ui/GlowCard";
+
+import {
+  getDashboardStats,
+} from "../services/dashboardService";
 
 export default function Dashboard() {
-  const [stats, setStats] = useState({
-    activeConflicts: 0,
-    threatIndex: 0,
-    alerts: 0,
-    forecastAccuracy: 0,
-  });
+  const [stats, setStats] =
+    useState({
+      activeConflicts: 0,
+      threatIndex: 0,
+      alerts: 0,
+      forecastAccuracy: 0,
+    });
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const data = await getDashboardStats();
-        setStats(data);
-      } catch (error) {
-        console.error(
-          "Failed to load dashboard stats:",
-          error
-        );
-      }
-    };
+    const fetchStats =
+      async () => {
+        try {
+          const data =
+            await getDashboardStats();
+
+          setStats(data);
+        } catch (error) {
+          console.error(
+            "Failed to load dashboard stats:",
+            error
+          );
+        }
+      };
 
     fetchStats();
   }, []);
 
   return (
     <div className="p-8">
-      <div className="mb-10">
-        <h1
+      {/* Header */}
+
+      <div className="mb-12">
+        <p
           className="
-          text-4xl
-          font-bold
-          text-white
+          text-xs
+
+          uppercase
+
+          tracking-[0.35em]
+
+          text-cyan-400
           "
         >
-          Global Dashboard
+          Global Intelligence Overview
+        </p>
+
+        <h1
+          className="
+          mt-3
+
+          text-5xl
+
+          font-black
+
+          text-white
+
+          leading-tight
+          "
+        >
+          Strategic
+          <br />
+          Intelligence
+          <br />
+          Dashboard
         </h1>
 
-        <p className="text-slate-400 mt-2">
-          Operational overview of geopolitical
-          activity, intelligence streams and
-          predictive forecasts.
+        <p
+          className="
+          mt-5
+
+          max-w-3xl
+
+          text-slate-400
+          text-lg
+          "
+        >
+          Monitor geopolitical risk,
+          active conflicts,
+          strategic forecasts,
+          and regional intelligence
+          in real time.
         </p>
       </div>
+
+      {/* Stat Cards */}
 
       <div
         className="
         grid
+
         grid-cols-1
         md:grid-cols-2
         xl:grid-cols-4
+
         gap-6
         "
       >
         <StatCard
           title="Active Conflicts"
-          value={stats.activeConflicts}
+          value={
+            stats.activeConflicts
+          }
           color="text-red-400"
         />
 
         <StatCard
           title="Threat Index"
-          value={stats.threatIndex}
+          value={
+            stats.threatIndex
+          }
           color="text-cyan-300"
         />
 
@@ -81,50 +135,67 @@ export default function Dashboard() {
         />
       </div>
 
-            <div
+      {/* Situation Overview */}
+
+      <GlowCard
         className="
         mt-8
-        bg-[#1A1F30]
-        border
-        border-[#3C494E]
-        rounded-xl
         p-6
         "
       >
         <h2
           className="
-          text-lg
+          text-xl
+
           font-semibold
+
           text-cyan-300
+
           mb-4
           "
         >
           Situation Overview
         </h2>
 
-        <p className="text-slate-400">
-          Monitor conflict zones, sanctions,
-          military deployments, diplomatic
-          developments and strategic risks
-          across the globe in real time.
-        </p>
-      </div>
+        <p
+  className="
+  text-slate-400
 
-      <div
+  leading-relaxed
+
+  text-base
+  md:text-lg
+
+  max-w-4xl
+  "
+>
+          Monitor conflict zones,
+          sanctions,
+          military deployments,
+          diplomatic developments,
+          intelligence signals,
+          and strategic risks
+          across the globe
+          in real time.
+        </p>
+      </GlowCard>
+
+      {/* Intelligence Map */}
+
+      <GlowCard
         className="
         mt-8
-        bg-[#1A1F30]
-        border
-        border-[#3C494E]
-        rounded-xl
-        p-6
+        p-8
         "
       >
         <h2
           className="
           text-2xl
+
           font-semibold
+
           text-cyan-300
+
           mb-6
           "
         >
@@ -132,7 +203,7 @@ export default function Dashboard() {
         </h2>
 
         <IntelligenceMap />
-      </div>
+      </GlowCard>
     </div>
   );
 }

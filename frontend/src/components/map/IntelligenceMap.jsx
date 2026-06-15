@@ -20,8 +20,10 @@ import api from "../../services/api";
 
 const conflictIcon =
   L.divIcon({
-    html:
-      '<div class="pulse-marker"></div>',
+    html: `
+      <div class="pulse-marker">
+      </div>
+    `,
     className: "",
     iconSize: [20, 20],
   });
@@ -206,8 +208,8 @@ export default function IntelligenceMap() {
                 }
                 radius={
                   Math.max(
-                    12,
-                    region.riskScore / 4
+                    8,
+                    region.riskScore / 8
                   )
                 }
                 pathOptions={{

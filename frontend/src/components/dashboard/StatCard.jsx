@@ -1,23 +1,19 @@
+import GlowCard from "../ui/GlowCard";
+
 export default function StatCard({
   title,
   value,
   color,
 }) {
   return (
-    <div
-      className="
-      bg-[#1A1F30]
-      border
-      border-[#3C494E]
-      rounded-xl
-      p-5
-      "
+    <GlowCard
+      className="p-6"
     >
       <p
         className="
-        text-xs
+        text-[11px]
         uppercase
-        tracking-wider
+        tracking-[0.25em]
         text-slate-500
         "
       >
@@ -25,10 +21,15 @@ export default function StatCard({
       </p>
 
       <h2
-        className={`text-4xl font-bold mt-3 ${color}`}
+        className={`
+        mt-4
+        text-5xl
+        font-black
+        ${color}
+        `}
       >
         {value}
       </h2>
-    </div>
+    </GlowCard>
   );
 }

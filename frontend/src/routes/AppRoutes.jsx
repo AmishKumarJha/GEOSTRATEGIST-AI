@@ -12,6 +12,8 @@ import Region from "../pages/Region";
 import News from "../pages/News";
 import Conflicts from "../pages/Conflicts";
 import Chat from "../pages/Chat";
+import ProtectedRoute from "./ProtectedRoute";
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -69,7 +71,16 @@ export default function AppRoutes() {
     </AppLayout>
   }
 />
-<Route path="/chat" element={<Chat />} />
+<Route
+  path="/chat"
+  element={
+    <ProtectedRoute>
+      <AppLayout>
+        <Chat />
+      </AppLayout>
+    </ProtectedRoute>
+  }
+/>
 
       </Routes>
     </BrowserRouter>

@@ -6,7 +6,7 @@
 .leaflet-popup-content-wrapper {
   background: #0f172a;
   color: white;
-  border: 1px solid rgba(34,211,238,.2);
+  border: 1px solid rgba(34, 211, 238, 0.2);
   border-radius: 16px;
 }
 
@@ -14,53 +14,77 @@
   background: #0f172a;
 }
 
+/* =====================================
+   CONFLICT MARKERS
+===================================== */
+
 .pulse-marker {
-  width: 18px;
-  height: 18px;
+  position: relative;
+
+  width: 14px;
+  height: 14px;
 
   border-radius: 50%;
 
   background: #ff3b30;
 
-  position: relative;
-
   box-shadow:
-    0 0 15px #ff3b30,
-    0 0 30px #ff3b30,
-    0 0 50px #ff3b30;
+    0 0 8px #ff3b30,
+    0 0 16px rgba(255, 59, 48, 0.35);
 }
 
+.pulse-marker::before,
 .pulse-marker::after {
   content: "";
 
   position: absolute;
 
-  top: -15px;
-  left: -15px;
+  top: 50%;
+  left: 50%;
 
-  width: 48px;
-  height: 48px;
+  width: 14px;
+  height: 14px;
 
   border-radius: 50%;
 
-  border: 2px solid #ff3b30;
+  border: 2px solid rgba(255, 59, 48, 0.8);
 
-  animation: pulse 2s infinite;
+  transform: translate(-50%, -50%);
+
+  animation: pulseRing 4s infinite linear;
 }
 
-@keyframes pulse {
+.pulse-marker::after {
+  animation-delay: 2s;
+}
 
+@keyframes pulseRing {
   0% {
-    transform: scale(.5);
-    opacity: 1;
+    width: 14px;
+    height: 14px;
+
+    opacity: 0.9;
+  }
+
+  30% {
+    opacity: 0.7;
+  }
+
+  60% {
+    opacity: 0.35;
   }
 
   100% {
-    transform: scale(2.2);
+    width: 110px;
+    height: 110px;
+
     opacity: 0;
   }
-
 }
+
+/* =====================================
+   POPUPS
+===================================== */
 
 .tactical-popup {
   min-width: 260px;
@@ -79,6 +103,10 @@
   font-size: 12px;
 }
 
+/* =====================================
+   RADAR SWEEP
+===================================== */
+
 .radar-sweep {
   position: absolute;
 
@@ -90,13 +118,12 @@
 
   border-radius: 50%;
 
-  transform:
-    translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
   background:
     conic-gradient(
       transparent 0deg,
-      rgba(34,211,238,.15) 35deg,
+      rgba(34, 211, 238, 0.15) 35deg,
       transparent 70deg
     );
 
@@ -109,7 +136,6 @@
 }
 
 @keyframes radarRotate {
-
   from {
     transform:
       translate(-50%, -50%)
@@ -121,8 +147,11 @@
       translate(-50%, -50%)
       rotate(360deg);
   }
-
 }
+
+/* =====================================
+   SCROLLBAR
+===================================== */
 
 .threat-feed::-webkit-scrollbar {
   width: 4px;
