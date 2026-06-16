@@ -74,30 +74,6 @@ async function generateRisk(regionName) {
             );
           }
         );
-      
-//           let detectedConflicts = 0;
-
-// filteredNews.forEach((article) => {
-
-//   const text = `
-//     ${article.title || ""}
-//     ${article.description || ""}
-//   `.toLowerCase();
-
-//   if (
-//     text.includes("war") ||
-//     text.includes("conflict") ||
-//     text.includes("attack") ||
-//     text.includes("missile") ||
-//     text.includes("drone") ||
-//     text.includes("invasion") ||
-//     text.includes("troops") ||
-//     text.includes("airstrike")
-//   ) {
-//     detectedConflicts++;
-//   }
-
-// });
 
 
           const newsText =
@@ -225,19 +201,12 @@ Rules:
 - Output JSON only.
 `;
 
-    // console.log(
-    //   `\n===== ${regionName} =====`
-    // );
-    
-    // console.log(
-    //   newsText.substring(0, 1500)
-    // );
     const response =
       await axios.post(
         "https://openrouter.ai/api/v1/chat/completions",
         {
           model:
-            "openai/gpt-oss-120b:free",
+            "nvidia/nemotron-3-ultra-550b-a55b:free",
 
           messages: [
             {

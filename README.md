@@ -39,7 +39,7 @@ An AI-powered geopolitical intelligence platform for conflict monitoring, region
 
 ### AI Layer
 - Owl Alpha
-- OSS120B Assessment Engine
+- NVIDIA: Nemotron 3 Ultra
 
 ---
 
